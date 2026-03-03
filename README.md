@@ -1,7 +1,8 @@
-Clasificador de Reservas de Hotel
+Clasificador de Reservas de Hotel con Cálculo de Costo Total
 Descripción
 
-Este proyecto implementa un sistema en C# que clasifica reservas de un hotel y calcula el costo adicional según la duración de la estadía, el tipo de cliente, la temporada y el tipo de habitación seleccionada.
+Este proyecto clasifica las reservas de un hotel y calcula el costo total de la estadía, teniendo en cuenta la cantidad de noches, el tipo de habitación, el tipo de cliente, la temporada y un costo fijo por día de hospedaje.
+El sistema aplica reglas de negocio para asignar la categoría de la reserva y determinar costos adicionales, mostrando al cliente un resumen completo del valor a pagar.
 
 Entradas
 
@@ -15,31 +16,42 @@ Temporada (baja o alta)
 
 Proceso
 
-El sistema evalúa un conjunto de reglas de negocio para asignar la categoría de la reserva (económica, premium o ejecutiva) y calcula un recargo adicional si la reserva se realiza en temporada alta.
+El sistema evalúa las condiciones de la reserva para asignar una categoría (económica, premium o ejecutiva).
+Luego calcula un costo adicional según la categoría asignada y aplica un recargo si la reserva se realiza en temporada alta.
+Finalmente, se calcula el costo por días de hospedaje y el total a pagar por la reserva.
 
 Salidas
 
-Categoría de reserva
+Categoría de la reserva
+
+Costo por días de hospedaje
 
 Costo adicional
 
-Mensaje para el cliente
+Costo total
+
+Mensaje informativo para el cliente
 
 Reglas
 
-Reserva premium si el cliente es VIP y se hospeda 3 o más noches.
+La reserva es ejecutiva si la habitación es suite o la estadía es de 5 o más noches.
 
-Reserva ejecutiva si la habitación es suite o la estadía es de 5 o más noches.
+La reserva es premium si el cliente es VIP y se hospeda 3 o más noches.
 
-Reserva económica en los demás casos.
+La reserva es económica en los demás casos.
 
-Recargo adicional del 20% si la temporada es alta.
-| Variable         | Tipo de dato | Descripción                           |
-| ---------------- | ------------ | ------------------------------------- |
-| noches           | int          | Número de noches reservadas           |
-| tipoHabitacion   | string       | Tipo de habitación elegida            |
-| tipoCliente      | string       | Indica si el cliente es regular o VIP |
-| temporada        | string       | Temporada de la reserva               |
-| categoriaReserva | string       | Categoría asignada a la reserva       |
-| costoAdicional   | decimal      | Valor adicional calculado             |
-| mensaje          | string       | Mensaje informativo para el cliente   |
+Se aplica un 20% de recargo al costo adicional si la temporada es alta.
+
+El costo por día de hospedaje es fijo y se multiplica por la cantidad de noches.
+
+| Variable         | Tipo de dato | Descripción                                    |
+| ---------------- | ------------ | ---------------------------------------------- |
+| costodia         | int          | Costo fijo por día de hospedaje                |
+| noches           | int          | Número de noches reservadas                    |
+| tipoHabitacion   | string       | Tipo de habitación seleccionada                |
+| tipoCliente      | string       | Indica si el cliente es regular o VIP          |
+| temporada        | string       | Temporada en la que se realiza la reserva      |
+| categoriaReserva | string       | Categoría asignada a la reserva                |
+| costoAdicional   | decimal      | Costo adicional según la categoría y temporada |
+| mensaje          | string       | Mensaje informativo para el cliente            |
+| total            | decimal      | Valor total a pagar por la reserva             |
