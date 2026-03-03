@@ -1,3 +1,6 @@
+Leyder Mosquera 
+Juan Mazo
+
 Clasificador de Reservas de Hotel con Cálculo de Costo Total
 Descripción
 
