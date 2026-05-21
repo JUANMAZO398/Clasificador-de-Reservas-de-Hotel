@@ -1,63 +1,148 @@
 using System;
 
-    class Program
+class Program
+{
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        decimal costoDia = 20000;
+
+        Console.WriteLine("Reservas De Hotel");
+        Console.WriteLine();
+
+        int noches = LeerEnteroPositivo("Ingrese la cantidad de noches: ");
+        string tipoHabitacion = LeerOpcion("Ingrese el tipo de habitacion (sencilla, doble, suite): ", "sencilla", "doble", "suite");
+        string tipoCliente = LeerOpcion("Ingrese el tipo de cliente (regular o vip): ", "regular", "vip");
+        string temporada = LeerOpcion("Ingrese la temporada (baja o alta): ", "baja", "alta");
+
+        string categoriaReserva = CalcularCategoriaReserva(noches, tipoHabitacion, tipoCliente);
+        decimal costoBase = CalcularCostoBase(noches, costoDia);
+        decimal costoAdicional = CalcularCostoAdicional(categoriaReserva, temporada);
+        decimal total = CalcularTotal(costoBase, costoAdicional);
+        string mensaje = CrearMensaje(categoriaReserva, costoAdicional);
+
+        MostrarResultado(costoBase, categoriaReserva, costoAdicional, mensaje, total);
+
+        Console.ReadKey();
+    }
+
+
+    /// Lee un numero entero positivo desde consola.
+    static int LeerEnteroPositivo(string mensaje)
+    {
+        int numero;
+
+        Console.Write(mensaje);
+        while (!int.TryParse(Console.ReadLine(), out numero) || numero <= 0)
         {
-			int costodia = 20000;
-            // Entradas
-            Console.Write("Ingrese la cantidad de noches: ");
-            int noches = int.Parse(Console.ReadLine());
+            Console.WriteLine("Error: ingrese un numero mayor que cero.");
+            Console.Write(mensaje);
+        }
 
-            Console.Write("Ingrese el tipo de habitación (sencilla, doble, suite): ");
-            string tipoHabitacion = Console.ReadLine().ToLower();
+        return numero;
+    }
 
-            Console.Write("Ingrese el tipo de cliente (regular o vip): ");
-            string tipoCliente = Console.ReadLine().ToLower();
 
-            Console.Write("Ingrese la temporada (baja o alta): ");
-            string temporada = Console.ReadLine().ToLower();
+    /// Lee una opcion de texto y valida que coincida con una de las opciones permitidas.
+    static string LeerOpcion(string mensaje, string opcion1, string opcion2, string opcion3 = "")
+    {
+        string dato;
 
-            // Variables de salida
-            string categoriaReserva;
-            decimal costoAdicional = 0;
-            string mensaje;
+        Console.Write(mensaje);
+        dato = NormalizarTexto(Console.ReadLine());
 
-            // Proceso - reglas de negocio
-            if (tipoHabitacion == "suite" || noches >= 5)
-            {
-                categoriaReserva = "Ejecutiva";
-                costoAdicional = 120000;
-            }
-            else if (tipoCliente == "vip" && noches >= 3)
-            {
-                categoriaReserva = "Premium";
-                costoAdicional = 80000;
-            }
-            else
-            {
-                categoriaReserva = "Económica";
-                costoAdicional = 40000;
-            }
+        while (dato != opcion1 && dato != opcion2 && dato != opcion3)
+        {
+            Console.WriteLine("Error: opcion no valida.");
+            Console.Write(mensaje);
+            dato = NormalizarTexto(Console.ReadLine());
+        }
 
-            // Recargo por temporada alta
-            if (temporada == "alta")
-            {
-                costoAdicional *= 1.20m;
-            }
+        return dato;
+    }
 
-            // Mensaje para el cliente
-            mensaje = $"Su reserva ha sido clasificada como {categoriaReserva}. " +
-                      $"El costo adicional es de ${costoAdicional}.";
 
-            // Salidas
-            Console.WriteLine("\n--- RESULTADO ---");
-			Console.WriteLine($"costo por días en el hotel: {costodia * noches}");
-            Console.WriteLine("Categoría de reserva: " + categoriaReserva);
-            Console.WriteLine("Costo adicional: $" + costoAdicional);
-            Console.WriteLine("Mensaje: " + mensaje);
-			Console.WriteLine($"total: {costodia * noches + costoAdicional}");
+    /// Quita espacios y convierte un texto a minusculas.
+    static string NormalizarTexto(string texto)
+    {
+        if (texto == null)
+        {
+            return "";
+        }
 
-            Console.ReadKey();
+        return texto.Trim().ToLower();
+    }
+
+    /// Clasifica la reserva segun las noches, el tipo de habitacion y el tipo de cliente.
+    static string CalcularCategoriaReserva(int noches, string tipoHabitacion, string tipoCliente)
+    {
+        if (tipoHabitacion == "suite" || noches >= 5)
+        {
+            return "Ejecutiva";
+        }
+        else if (tipoCliente == "vip" && noches >= 3)
+        {
+            return "Premium";
+        }
+        else
+        {
+            return "Economica";
         }
     }
+
+    /// Calcula el valor de las noches en el hotel.
+    static decimal CalcularCostoBase(int noches, decimal costoDia)
+    {
+        return noches * costoDia;
+    }
+
+    /// Calcula el costo adicional segun la categoria y la temporada.
+    static decimal CalcularCostoAdicional(string categoriaReserva, string temporada)
+    {
+        decimal costoAdicional;
+
+        if (categoriaReserva == "Ejecutiva")
+        {
+            costoAdicional = 120000;
+        }
+        else if (categoriaReserva == "Premium")
+        {
+            costoAdicional = 80000;
+        }
+        else
+        {
+            costoAdicional = 40000;
+        }
+
+        if (temporada == "alta")
+        {
+            costoAdicional = costoAdicional * 1.20m;
+        }
+
+        return costoAdicional;
+    }
+    /// Suma el costo base y el costo adicional.
+    static decimal CalcularTotal(decimal costoBase, decimal costoAdicional)
+    {
+        return costoBase + costoAdicional;
+    }
+
+    /// Crea el mensaje final para el cliente.
+    static string CrearMensaje(string categoriaReserva, decimal costoAdicional)
+    {
+        return "Su reserva ha sido clasificada como " + categoriaReserva +
+               ". El costo adicional es de $" + costoAdicional + ".";
+    }
+
+
+    /// Muestra en consola el resultado final de la reserva.
+    static void MostrarResultado(decimal costoBase, string categoriaReserva, decimal costoAdicional, string mensaje, decimal total)
+    {
+        Console.WriteLine();
+        Console.WriteLine("--- RESULTADO ---");
+        Console.WriteLine("Costo por dias en el hotel: $" + costoBase);
+        Console.WriteLine("Categoria de reserva: " + categoriaReserva);
+        Console.WriteLine("Costo adicional: $" + costoAdicional);
+        Console.WriteLine("Mensaje: " + mensaje);
+        Console.WriteLine("Total: $" + total);
+    }
+}
