@@ -6,7 +6,7 @@ class Program
     {
         decimal costoDia = 20000;
 
-        Console.WriteLine("=== SISTEMA DE RESERVAS DE HOTEL ===");
+        Console.WriteLine("Reservas De Hotel");
         Console.WriteLine();
 
         int noches = LeerEnteroPositivo("Ingrese la cantidad de noches: ");
@@ -183,7 +183,7 @@ class Program
     static void MostrarResultado(decimal costoBase, string categoriaReserva, decimal costoAdicional, string mensaje, decimal total)
     {
         Console.WriteLine();
-        Console.WriteLine("--- RESULTADO ---");
+        Console.WriteLine("Resultado final:");
         Console.WriteLine("Costo por dias en el hotel: $" + costoBase);
         Console.WriteLine("Categoria de reserva: " + categoriaReserva);
         Console.WriteLine("Costo adicional: $" + costoAdicional);
