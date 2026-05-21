@@ -67,6 +67,24 @@ El programa pide:
 - Temporada alta aumenta el adicional en 20%.
 - El costo por dia es `$20000`.
 
+## Cambios realizados y justificacion
+
+El codigo original estaba completo dentro de `Main`. El cambio principal fue dividirlo en funciones para que cada parte tenga una responsabilidad clara.
+
+| Cambio | Por que fue adecuado |
+| --- | --- |
+| Se creo `LeerEnteroPositivo` | Evita que el programa acepte noches negativas, cero o textos que causen error. |
+| Se creo `LeerOpcion` | Permite validar habitacion, cliente y temporada sin repetir mucho codigo. |
+| Se creo `NormalizarTexto` | Permite aceptar respuestas con mayusculas o espacios, por ejemplo ` VIP ` o `Alta`. |
+| Se separo `CalcularCategoriaReserva` | La regla para decidir la categoria queda aislada y facil de explicar. |
+| Se separo `CalcularCostoBase` | El calculo de noches por costo diario queda independiente. |
+| Se separo `CalcularCostoAdicional` | El adicional por categoria y el recargo de temporada alta quedan en una sola funcion. |
+| Se creo `CalcularTotal` | El total se calcula en una funcion simple y reutilizable. |
+| Se creo `CrearMensaje` | El mensaje final no queda mezclado con los calculos. |
+| Se creo `MostrarResultado` | La salida por consola queda separada de la logica de calculo. |
+
+Estos cambios son adecuados porque `Main` queda mas ordenado y solo coordina el programa. Ademas, las funciones de calculo no leen datos ni imprimen mensajes, solo reciben parametros y retornan resultados.
+
 ## Casos de prueba
 
 | Noches | Habitacion | Cliente | Temporada | Categoria | Total |
