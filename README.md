@@ -1,4 +1,3 @@
-Leyder Mosquera 
 Juan Mazo
 
 Clasificador de Reservas de Hotel con Cálculo de Costo Total
@@ -35,26 +34,44 @@ Costo total
 
 Mensaje informativo para el cliente
 
-Reglas
+## Como ejecutar
 
-La reserva es ejecutiva si la habitación es suite o la estadía es de 5 o más noches.
 
-La reserva es premium si el cliente es VIP y se hospeda 3 o más noches.
+El programa pide:
 
-La reserva es económica en los demás casos.
+- Cantidad de noches.
+- Tipo de habitacion: `sencilla`, `doble` o `suite`.
+- Tipo de cliente: `regular` o `vip`.
+- Temporada: `baja` o `alta`.
 
-Se aplica un 20% de recargo al costo adicional si la temporada es alta.
+## Organizacion del codigo
 
-El costo por día de hospedaje es fijo y se multiplica por la cantidad de noches.
+| Funcion | Que hace |
+| --- | --- |
+| `Main` | Coordina el programa: pide datos, llama calculos y muestra resultado. |
+| `LeerEnteroPositivo` | Valida que las noches sean mayores que cero. |
+| `LeerOpcion` | Valida opciones como habitacion, cliente y temporada. |
+| `NormalizarTexto` | Convierte el texto a minusculas y quita espacios. |
+| `CalcularCategoriaReserva` | Decide si la reserva es Ejecutiva, Premium o Economica. |
+| `CalcularCostoBase` | Multiplica noches por costo diario. |
+| `CalcularCostoAdicional` | Calcula el adicional y aplica recargo del 20% en temporada alta. |
+| `CalcularTotal` | Suma costo base y costo adicional. |
+| `CrearMensaje` | Arma el mensaje para el cliente. |
+| `MostrarResultado` | Imprime el resultado en consola. |
 
-| Variable         | Tipo de dato | Descripción                                    |
-| ---------------- | ------------ | ---------------------------------------------- |
-| costodia         | int          | Costo fijo por día de hospedaje                |
-| noches           | int          | Número de noches reservadas                    |
-| tipoHabitacion   | string       | Tipo de habitación seleccionada                |
-| tipoCliente      | string       | Indica si el cliente es regular o VIP          |
-| temporada        | string       | Temporada en la que se realiza la reserva      |
-| categoriaReserva | string       | Categoría asignada a la reserva                |
-| costoAdicional   | decimal      | Costo adicional según la categoría y temporada |
-| mensaje          | string       | Mensaje informativo para el cliente            |
-| total            | decimal      | Valor total a pagar por la reserva             |
+## Reglas usadas
+
+- Suite o 5 noches o mas: categoria `Ejecutiva`, adicional `$120000`.
+- Cliente vip con 3 noches o mas: categoria `Premium`, adicional `$80000`.
+- Los demas casos: categoria `Economica`, adicional `$40000`.
+- Temporada alta aumenta el adicional en 20%.
+- El costo por dia es `$20000`.
+
+## Casos de prueba
+
+| Noches | Habitacion | Cliente | Temporada | Categoria | Total |
+| --- | --- | --- | --- | --- | ---: |
+| 2 | sencilla | regular | baja | Economica | $80000 |
+| 3 | doble | vip | baja | Premium | $140000 |
+| 5 | sencilla | regular | alta | Ejecutiva | $244000 |
+| 1 | suite | regular | alta | Ejecutiva | $164000 |
