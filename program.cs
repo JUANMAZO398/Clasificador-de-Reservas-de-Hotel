@@ -25,11 +25,7 @@ class Program
         Console.ReadKey();
     }
 
-    /// <summary>
     /// Lee un numero entero positivo desde consola.
-    /// </summary>
-    /// <param name="mensaje">Mensaje que se muestra para pedir el dato.</param>
-    /// <returns>Numero entero mayor que cero.</returns>
     static int LeerEnteroPositivo(string mensaje)
     {
         int numero;
@@ -44,14 +40,7 @@ class Program
         return numero;
     }
 
-    /// <summary>
     /// Lee una opcion de texto y valida que coincida con una de las opciones permitidas.
-    /// </summary>
-    /// <param name="mensaje">Mensaje que se muestra para pedir el dato.</param>
-    /// <param name="opcion1">Primera opcion permitida.</param>
-    /// <param name="opcion2">Segunda opcion permitida.</param>
-    /// <param name="opcion3">Tercera opcion permitida, si aplica.</param>
-    /// <returns>Texto validado en minusculas.</returns>
     static string LeerOpcion(string mensaje, string opcion1, string opcion2, string opcion3 = "")
     {
         string dato;
@@ -69,11 +58,8 @@ class Program
         return dato;
     }
 
-    /// <summary>
+
     /// Quita espacios y convierte un texto a minusculas.
-    /// </summary>
-    /// <param name="texto">Texto escrito por el usuario.</param>
-    /// <returns>Texto limpio para comparar.</returns>
     static string NormalizarTexto(string texto)
     {
         if (texto == null)
@@ -84,13 +70,7 @@ class Program
         return texto.Trim().ToLower();
     }
 
-    /// <summary>
     /// Clasifica la reserva segun las noches, el tipo de habitacion y el tipo de cliente.
-    /// </summary>
-    /// <param name="noches">Cantidad de noches de la reserva.</param>
-    /// <param name="tipoHabitacion">Tipo de habitacion: sencilla, doble o suite.</param>
-    /// <param name="tipoCliente">Tipo de cliente: regular o vip.</param>
-    /// <returns>Categoria de la reserva: Ejecutiva, Premium o Economica.</returns>
     static string CalcularCategoriaReserva(int noches, string tipoHabitacion, string tipoCliente)
     {
         if (tipoHabitacion == "suite" || noches >= 5)
@@ -107,23 +87,15 @@ class Program
         }
     }
 
-    /// <summary>
+
     /// Calcula el valor de las noches en el hotel.
-    /// </summary>
-    /// <param name="noches">Cantidad de noches reservadas.</param>
-    /// <param name="costoDia">Valor de un dia o noche en el hotel.</param>
-    /// <returns>Costo base de la estadia.</returns>
     static decimal CalcularCostoBase(int noches, decimal costoDia)
     {
         return noches * costoDia;
     }
 
-    /// <summary>
+
     /// Calcula el costo adicional segun la categoria y la temporada.
-    /// </summary>
-    /// <param name="categoriaReserva">Categoria calculada para la reserva.</param>
-    /// <param name="temporada">Temporada baja o alta.</param>
-    /// <returns>Costo adicional final.</returns>
     static decimal CalcularCostoAdicional(string categoriaReserva, string temporada)
     {
         decimal costoAdicional;
@@ -149,37 +121,23 @@ class Program
         return costoAdicional;
     }
 
-    /// <summary>
-    /// Suma el costo base y el costo adicional.
-    /// </summary>
-    /// <param name="costoBase">Costo por las noches en el hotel.</param>
-    /// <param name="costoAdicional">Costo extra por categoria y temporada.</param>
-    /// <returns>Total que debe pagar el cliente.</returns>
+
+   /// Suma el costo base y el costo adicional.
     static decimal CalcularTotal(decimal costoBase, decimal costoAdicional)
     {
         return costoBase + costoAdicional;
     }
 
-    /// <summary>
+
     /// Crea el mensaje final para el cliente.
-    /// </summary>
-    /// <param name="categoriaReserva">Categoria asignada a la reserva.</param>
-    /// <param name="costoAdicional">Costo adicional calculado.</param>
-    /// <returns>Mensaje con la clasificacion y el costo adicional.</returns>
     static string CrearMensaje(string categoriaReserva, decimal costoAdicional)
     {
         return "Su reserva ha sido clasificada como " + categoriaReserva +
                ". El costo adicional es de $" + costoAdicional + ".";
     }
 
-    /// <summary>
+
     /// Muestra en consola el resultado final de la reserva.
-    /// </summary>
-    /// <param name="costoBase">Costo por dias en el hotel.</param>
-    /// <param name="categoriaReserva">Categoria final de la reserva.</param>
-    /// <param name="costoAdicional">Costo adicional final.</param>
-    /// <param name="mensaje">Mensaje para el cliente.</param>
-    /// <param name="total">Total a pagar.</param>
     static void MostrarResultado(decimal costoBase, string categoriaReserva, decimal costoAdicional, string mensaje, decimal total)
     {
         Console.WriteLine();
